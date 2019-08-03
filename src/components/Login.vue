@@ -22,8 +22,8 @@ import { auth, setAuthInHeader } from '../api'
 export default {
     data() {
         return {
-            email: '',
-            password: '',
+            email: 'test@test.com',
+            password: '123123',
             error: '',
             rPath: ''
         }
