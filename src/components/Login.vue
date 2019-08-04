@@ -23,8 +23,8 @@ import { mapActions } from 'vuex'
 export default {
     data() {
         return {
-            email: '',
-            password: '',
+            email: 'test@test.com',
+            password: '123123',
             error: '',
             rPath: ''
         }
