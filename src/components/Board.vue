@@ -17,7 +17,7 @@
                 </div>
             </div>
         </div>
-        <BoardSetting v-if="isShowBoardSettings"/>
+        <BoardSetting v-if="isShowBoardSettings" />
         <router-view></router-view>
     </div>
 </template>
@@ -51,7 +51,7 @@ export default {
           this.SET_THEME(this.board.bgColor)
         })
 
-        this.SET_IS_SHOW_BOARD_MENU(false)
+        this.SET_IS_SHOW_BOARD_SETTINGS(false)
     },
     updated() {
       this.setCardDraggable()
@@ -59,7 +59,7 @@ export default {
     methods: {
         ...mapMutations([
           'SET_THEME',
-          'SET_IS_SHOW_BOARD_MENU'
+          'SET_IS_SHOW_BOARD_SETTINGS'
         ]),
         ...mapActions([
             'FETCH_BOARD',
@@ -97,7 +97,7 @@ export default {
           })
         },
         onShowSettings() {
-          this.SET_IS_SHOW_BOARD_MENU(true)
+          this.SET_IS_SHOW_BOARD_SETTINGS(true)
         }
     }
 }
