@@ -4,6 +4,9 @@
             <div class="board">
                 <div class="board-header">
                     <span class="board-title">{{ board.title }}</span>
+                    <a class="board-header-btn show-menu" href="" @click.prevent="onShowSettings">
+                      ... Show menu
+                    </a>
                 </div>
                 <div class="list-section-wrapper">
                     <div class="list-section">
@@ -14,18 +17,21 @@
                 </div>
             </div>
         </div>
+        <BoardSetting v-if="isShowBoardSettings"/>
         <router-view></router-view>
     </div>
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions, mapMutations } from 'vuex'
 import List from './List.vue'
+import BoardSetting from './BoardSetting.vue'
 import dragger from '../utils/dragger'
 
 export default {
     components: {
-        List
+        List,
+        BoardSetting
     },
     data() {
         return {
@@ -36,16 +42,25 @@ export default {
     },
     computed: {
         ...mapState([
-            'board'
+            'board',
+            'isShowBoardSettings'
         ])
     },
     created() {
-        this.fetchData()
+        this.fetchData().then(() => {
+          this.SET_THEME(this.board.bgColor)
+        })
+
+        this.SET_IS_SHOW_BOARD_MENU(false)
     },
     updated() {
       this.setCardDraggable()
     },
     methods: {
+        ...mapMutations([
+          'SET_THEME',
+          'SET_IS_SHOW_BOARD_MENU'
+        ]),
         ...mapActions([
             'FETCH_BOARD',
             'UPDATE_CARD'
@@ -53,7 +68,7 @@ export default {
         fetchData() {
             this.loading = true
 
-            this.FETCH_BOARD({id: this.$route.params.bid})
+            return this.FETCH_BOARD({id: this.$route.params.bid})
             .then(() => {
                 this.loading = false
             })
@@ -80,6 +95,9 @@ export default {
 
             this.UPDATE_CARD(targetCard)
           })
+        },
+        onShowSettings() {
+          this.SET_IS_SHOW_BOARD_MENU(true)
         }
     }
 }
