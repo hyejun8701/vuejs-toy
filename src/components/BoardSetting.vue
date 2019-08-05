@@ -8,6 +8,13 @@
       <li>
         <a href="" @click.prevent="onDeleteBoard">Delete Board</a>
       </li>
+      <li>Change Background</li>
+      <div class="color-picker">
+        <a href="" data-value="rgb(0, 121, 191)" @click.prevent="onChangeTheme"></a>
+        <a href="" data-value="rgb(210, 144, 52)" @click.prevent="onChangeTheme"></a>
+        <a href="" data-value="rgb(81, 152, 57)" @click.prevent="onChangeTheme"></a>
+        <a href="" data-value="rgb(176, 70, 50)" @click.prevent="onChangeTheme"></a>
+      </div>
     </ul>
   </div>
 </template>
@@ -20,12 +27,19 @@ export default {
       'board'
     ])
   },
+  mounted() {
+    Array.from(this.$el.querySelectorAll('.color-picker a')).forEach(el => {
+      el.style.backgroundColor = el.dataset.value
+    })
+  },
   methods: {
     ...mapActions([
-      'DELETE_BOARD'
+      'DELETE_BOARD',
+      'UPDATE_BOARD'
     ]),
     ...mapMutations([
-      'SET_IS_SHOW_BOARD_SETTINGS'
+      'SET_IS_SHOW_BOARD_SETTINGS',
+      'SET_THEME'
     ]),
     onClose() {
       this.SET_IS_SHOW_BOARD_SETTINGS(false)
@@ -35,6 +49,12 @@ export default {
       this.DELETE_BOARD({id: this.board.id})
       .then(() => this.SET_IS_SHOW_BOARD_SETTINGS(false))
       .then(() => this.$router.push('/'))
+    },
+    onChangeTheme(el) {
+      const id = this.board.id
+      const bgColor = el.target.dataset.value
+      this.UPDATE_BOARD({id, bgColor})
+      .then(() => this.SET_THEME(bgColor))
     }
   }
 }
