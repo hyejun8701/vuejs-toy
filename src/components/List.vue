@@ -1,13 +1,17 @@
 <template>
-  <div class="list">
+  <div class="list" :data-list-id="data.id" :data-list-pos="data.pos">
     <div class="list-header">
       <input v-if="isEditTitle" class="form-control input-title" type="text"
       ref="inputTitle" v-model="inputTitle" @blur="onBlurTitle" @keyup.enter="onSubmitTitle">
       <div v-else class="list-header-title" @click.prevent="onClickTitle">{{data.title}}</div>
     </div>
 
-    <div class="card-list">
+    <div class="card-list" :data-list-id="data.id">
+      <div v-show="!data.cards.length" class="empty-card-item"></div>
       <CardItem v-for="card in data.cards" :key="card.id" :data="card"/>
+      <!-- <div v-show="!data.cards.length" class="empty-card-item"></div>
+      <CardItem v-for="card in data.cards" :key="`${card.id}-${card.pos}`" 
+        :data="card" :boardId="data.boardId" /> -->
     </div>
   
     <div v-if="isAddCard">
