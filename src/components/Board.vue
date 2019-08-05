@@ -69,7 +69,7 @@ export default {
 
             const {prev, next} = dragger.sibling({
               el,
-              wapper,
+              wrapper,
               candidates: Array.from(wrapper.querySelectorAll('.card-item')),
               type: 'card'
             })

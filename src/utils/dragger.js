@@ -3,9 +3,9 @@ import 'dragula/dist/dragula.css'
 
 const dragger = {
     init(container) {
-        return dragger([...container])
+        return dragula([...container])
     },
-    sibling({el, wapper, candidates, type}) {
+    sibling({el, wrapper, candidates, type}) {
         const curId = el.dataset[type + 'Id']  * 1
         let prev = null
         let next = null
